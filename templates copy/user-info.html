@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block user %} {{userperson}} {% endblock %}
+{% block body %}
+
+<br><br><br><br>
+
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+    
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+      	var sectors = {{sectors|safe}}
+      	var mainList = [["Sectors","Donation Amount"]];
+      	for(var key in sectors){
+      		var list = [];
+      		list.push(key);
+      		list.push(sectors[key]);
+      		mainList.push(list);
+      	}
+
+        var data = google.visualization.arrayToDataTable(mainList);
+
+        var options = {
+          title: 'Total Donation'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+  	<center>
+  	<h1> Welcome <span id="usernameprofile"> </span> </h1>
+    <div id="piechart" style="width: 900px; height: 500px;"></div>
+    </center>
+  </body>
+
+    <script type="text/javascript"
+          src="https://www.google.com/jsapi?autoload={
+            'modules':[{
+              'name':'visualization',
+              'version':'1',
+              'packages':['corechart']
+            }]
+          }">
+    </script>
+    
+  </head>
+  <body>
+    <center>  <div id="curve_chart" style="width: 900px; height:100px"></div> </center>
+  </body>
+	
+{% endblock %}
